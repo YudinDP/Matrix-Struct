@@ -1,15 +1,15 @@
-#include "Matrix_struct.h"//заголовочный файл с классом
-#include <iostream> //ввод-вывод
-#include <iomanip> //для красивого вывода
-#include <stdlib.h>// определяет функции srand,rand
-#include <vector> //для векторов //author Yudin
-#include <cmath> //для математики в обратной матрице
-#include <stdexcept> //для try-catch
-#include <cassert> //для assert-ов
+#include "Matrix_struct.h"//Г§Г ГЈГ®Г«Г®ГўГ®Г·Г­Г»Г© ГґГ Г©Г« Г± ГЄГ«Г Г±Г±Г®Г¬
+#include <iostream> //ГўГўГ®Г¤-ГўГ»ГўГ®Г¤
+#include <iomanip> //Г¤Г«Гї ГЄГ°Г Г±ГЁГўГ®ГЈГ® ГўГ»ГўГ®Г¤Г 
+#include <stdlib.h>// Г®ГЇГ°ГҐГ¤ГҐГ«ГїГҐГІ ГґГіГ­ГЄГ¶ГЁГЁ srand,rand
+#include <vector> //Г¤Г«Гї ГўГҐГЄГІГ®Г°Г®Гў //author Yudin
+#include <cmath> //Г¤Г«Гї Г¬Г ГІГҐГ¬Г ГІГЁГЄГЁ Гў Г®ГЎГ°Г ГІГ­Г®Г© Г¬Г ГІГ°ГЁГ¶ГҐ
+#include <stdexcept> //Г¤Г«Гї try-catch
+#include <cassert> //Г¤Г«Гї assert-Г®Гў
 using namespace std;
 
 
-//конструктор по умолчанию - заполняет нулями матрицу 3x3
+//ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° ГЇГ® ГіГ¬Г®Г«Г·Г Г­ГЁГѕ - Г§Г ГЇГ®Г«Г­ГїГҐГІ Г­ГіГ«ГїГ¬ГЁ Г¬Г ГІГ°ГЁГ¶Гі 3x3
 Matrix::Matrix() {
 	unsigned int n = 3;
 	Matr.resize(n);
@@ -18,9 +18,9 @@ Matrix::Matrix() {
 	}
 }
 
-//конструктор с параметрами - заполняет нулями матрицу rowXcol
+//ГЄГ®Г­Г±ГІГ°ГіГЄГІГ®Г° Г± ГЇГ Г°Г Г¬ГҐГІГ°Г Г¬ГЁ - Г§Г ГЇГ®Г«Г­ГїГҐГІ Г­ГіГ«ГїГ¬ГЁ Г¬Г ГІГ°ГЁГ¶Гі rowXcol
 Matrix::Matrix(unsigned int row, unsigned int col) {
-	if (row < 1 || col < 1) {  //кидаем исключение, если размер матрицы по строкам или столбцам < 1
+	if (row < 1 || col < 1) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г°Г Г§Г¬ГҐГ° Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® Г±ГІГ°Г®ГЄГ Г¬ ГЁГ«ГЁ Г±ГІГ®Г«ГЎГ¶Г Г¬ < 1
 		throw std::invalid_argument("Incorrect parameters of matrix size");
 	}
 	else {
@@ -31,18 +31,18 @@ Matrix::Matrix(unsigned int row, unsigned int col) {
 	}
 }
 
-//деструктор
+//Г¤ГҐГ±ГІГ°ГіГЄГІГ®Г°
 Matrix::~Matrix() {
 	cout << "~Matrix" << endl;
 	Matr.clear();
 }
 
 
-//геттер матрицы в виде вектора из векторов типа double
+//ГЈГҐГІГІГҐГ° Г¬Г ГІГ°ГЁГ¶Г» Гў ГўГЁГ¤ГҐ ГўГҐГЄГІГ®Г°Г  ГЁГ§ ГўГҐГЄГІГ®Г°Г®Гў ГІГЁГЇГ  double
 std::vector<std::vector<double>> Matrix::Get_Matr() {
 	return Matr;
 }
-//вывод всей матрицы на экран
+//ГўГ»ГўГ®Г¤ ГўГ±ГҐГ© Г¬Г ГІГ°ГЁГ¶Г» Г­Г  ГЅГЄГ°Г Г­
 void Matrix::Output_Matrix() {
 	cout << endl;
 	for (unsigned int i = 0; i < Matr.size(); i++) {
@@ -55,9 +55,9 @@ void Matrix::Output_Matrix() {
 	cout << endl;
 }
 
-//геттер элемента матрицы по его передаваемому в параметрах положению в матрице
+//ГЈГҐГІГІГҐГ° ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® ГҐГЈГ® ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г®Г¬Гі Гў ГЇГ Г°Г Г¬ГҐГІГ°Г Гµ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГѕ Гў Г¬Г ГІГ°ГЁГ¶ГҐ
 double Matrix::Get_Element(unsigned int row, unsigned int col) {  
-	if ((row < 0 || row > Matr.size()) || (col < 0 || col > Matr[0].size())) { //кидаем ислючение, если введены неправильные координаты в матрице
+	if ((row < 0 || row > Matr.size()) || (col < 0 || col > Matr[0].size())) { //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±Г«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ ГўГўГҐГ¤ГҐГ­Г» Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г»ГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Гў Г¬Г ГІГ°ГЁГ¶ГҐ
 		throw std::invalid_argument("Incorrect Matrix coordinate");
 	}
 	else
@@ -66,9 +66,9 @@ double Matrix::Get_Element(unsigned int row, unsigned int col) {
 	}
 }
 
-//сеттер элемента матрицы по его передаваемому в параметрах положению в матрице
+//Г±ГҐГІГІГҐГ° ГЅГ«ГҐГ¬ГҐГ­ГІГ  Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® ГҐГЈГ® ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г®Г¬Гі Гў ГЇГ Г°Г Г¬ГҐГІГ°Г Гµ ГЇГ®Г«Г®Г¦ГҐГ­ГЁГѕ Гў Г¬Г ГІГ°ГЁГ¶ГҐ
 void Matrix::Set_Element(unsigned int row, unsigned int col, double param) {  
-	if ((row < 0 || row > Matr.size()) || (col < 0 || col > Matr[0].size())) { //кидаем ислючение, если введены неправильные координаты в матрице
+	if ((row < 0 || row > Matr.size()) || (col < 0 || col > Matr[0].size())) { //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±Г«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ ГўГўГҐГ¤ГҐГ­Г» Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г»ГҐ ГЄГ®Г®Г°Г¤ГЁГ­Г ГІГ» Гў Г¬Г ГІГ°ГЁГ¶ГҐ
 		throw std::invalid_argument("Incorrect Matrix coordinate");
 	}
 	else 
@@ -77,9 +77,9 @@ void Matrix::Set_Element(unsigned int row, unsigned int col, double param) {
 	}
 }
 
-//геттер строки матрицы по ее номеру(на выход подается double вектор)
+//ГЈГҐГІГІГҐГ° Г±ГІГ°Г®ГЄГЁ Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® ГҐГҐ Г­Г®Г¬ГҐГ°Гі(Г­Г  ГўГ»ГµГ®Г¤ ГЇГ®Г¤Г ГҐГІГ±Гї double ГўГҐГЄГІГ®Г°)
 std::vector<double> Matrix::Get_Str(unsigned int row) {
-	if (row < 0 || row > Matr.size()) {  //кидаем исключение, если неправильно передан номер строки
+	if (row < 0 || row > Matr.size()) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г® ГЇГҐГ°ГҐГ¤Г Г­ Г­Г®Г¬ГҐГ° Г±ГІГ°Г®ГЄГЁ
 		throw std::invalid_argument("Incorrect row number");
 	}
 	else {
@@ -87,12 +87,12 @@ std::vector<double> Matrix::Get_Str(unsigned int row) {
 	}
 }
 
-//сеттер строки матрицы по ее номеру и передаваемому вектору типа double то же размерности
+//Г±ГҐГІГІГҐГ° Г±ГІГ°Г®ГЄГЁ Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® ГҐГҐ Г­Г®Г¬ГҐГ°Гі ГЁ ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г®Г¬Гі ГўГҐГЄГІГ®Г°Гі ГІГЁГЇГ  double ГІГ® Г¦ГҐ Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГЁ
 void Matrix::Set_Str_By_Vector(unsigned int row, const std::vector<double> str) {
-	if (row < 0 || row > Matr.size()) {  //кидаем исключение, если неправильно передан номер строки
+	if (row < 0 || row > Matr.size()) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г® ГЇГҐГ°ГҐГ¤Г Г­ Г­Г®Г¬ГҐГ° Г±ГІГ°Г®ГЄГЁ
 		throw std::invalid_argument("Incorrect row number");
 	}
-	else if (str.size() != Matr[row].size()) { //исключение на непрвильную длину передаваемого вектора
+	else if (str.size() != Matr[row].size()) { //ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ Г­Г  Г­ГҐГЇГ°ГўГЁГ«ГјГ­ГіГѕ Г¤Г«ГЁГ­Гі ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г®ГЈГ® ГўГҐГЄГІГ®Г°Г 
 		throw std::length_error("Incorrect new string length");
 	}
 	else
@@ -103,9 +103,9 @@ void Matrix::Set_Str_By_Vector(unsigned int row, const std::vector<double> str) 
 	}
 }
 
-//сеттер строки матрицы по ее номеру и передаваемому вектору типа double то же размерности
+//Г±ГҐГІГІГҐГ° Г±ГІГ°Г®ГЄГЁ Г¬Г ГІГ°ГЁГ¶Г» ГЇГ® ГҐГҐ Г­Г®Г¬ГҐГ°Гі ГЁ ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г®Г¬Гі ГўГҐГЄГІГ®Г°Гі ГІГЁГЇГ  double ГІГ® Г¦ГҐ Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГЁ
 void Matrix::Set_Str_By_Keyboard(unsigned int row) {
-	if (row < 0 || row > Matr.size()) {  //кидаем исключение, если неправильно передан номер строки
+	if (row < 0 || row > Matr.size()) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г® ГЇГҐГ°ГҐГ¤Г Г­ Г­Г®Г¬ГҐГ° Г±ГІГ°Г®ГЄГЁ
 		throw std::invalid_argument("Incorrect row number");
 	}
 	else
@@ -117,7 +117,7 @@ void Matrix::Set_Str_By_Keyboard(unsigned int row) {
 	}
 }
 
-//заполнение матрицы одним передаваемым числом number
+//Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г» Г®Г¤Г­ГЁГ¬ ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г»Г¬ Г·ГЁГ±Г«Г®Г¬ number
 void Matrix::Fill_With(double number) {
 	for (unsigned int i = 0; i < Matr.size(); i++) {
 		for (unsigned int j = 0; j < Matr[i].size(); j++) {
@@ -126,22 +126,22 @@ void Matrix::Fill_With(double number) {
 	}
 }
 
-//заполнение матрицы случайными числами из диапазона min - max
+//Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г» Г±Г«ГіГ·Г Г©Г­Г»Г¬ГЁ Г·ГЁГ±Г«Г Г¬ГЁ ГЁГ§ Г¤ГЁГ ГЇГ Г§Г®Г­Г  min - max
 void Matrix::Fill_Random(double min, double max) {
-	if (min > max || min == max) {  //кидаем исклюбчение если диапазон введен некорректно
+	if (min > max || min == max) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГЎГ·ГҐГ­ГЁГҐ ГҐГ±Г«ГЁ Г¤ГЁГ ГЇГ Г§Г®Г­ ГўГўГҐГ¤ГҐГ­ Г­ГҐГЄГ®Г°Г°ГҐГЄГІГ­Г®
 		throw std::range_error("Incorrect random range input. Correct examples: (10, 20),  (1.12, 2.56)");
 	}
 	else
 	{
 		for (unsigned int i = 0; i < Matr.size(); i++) {
 			for (unsigned int j = 0; j < Matr[i].size(); j++) {
-				Matr[i][j] = (1.0 * rand() / RAND_MAX * (max - min) + min);//генерация рандомного числа от min до max
+				Matr[i][j] = (1.0 * rand() / RAND_MAX * (max - min) + min);//ГЈГҐГ­ГҐГ°Г Г¶ГЁГї Г°Г Г­Г¤Г®Г¬Г­Г®ГЈГ® Г·ГЁГ±Г«Г  Г®ГІ min Г¤Г® max
 			}
 		}
 	}
 }
 
-//умножение матрицы на число number
+//ГіГ¬Г­Г®Г¦ГҐГ­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г» Г­Г  Г·ГЁГ±Г«Г® number
 void Matrix::Matr_X_Number(double number) {
 	for (unsigned int i = 0; i < Matr.size(); i++) {
 		for (unsigned int j = 0; j < Matr[i].size(); j++) {
@@ -150,28 +150,28 @@ void Matrix::Matr_X_Number(double number) {
 	}
 }
 
-//транспонирование исходной матрицы
+//ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­ГЁГҐ ГЁГ±ГµГ®Г¤Г­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»
 void Matrix::Transposition() {
-	std::vector<std::vector<double>> T;   //создаем матрицу T транспонированной размерности
-	T.resize(Matr[0].size());  //в которую будем транспонировано записывать элементы исходной матрицы
+	std::vector<std::vector<double>> T;   //Г±Г®Г§Г¤Г ГҐГ¬ Г¬Г ГІГ°ГЁГ¶Гі T ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­Г­Г®Г© Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГЁ
+	T.resize(Matr[0].size());  //Гў ГЄГ®ГІГ®Г°ГіГѕ ГЎГіГ¤ГҐГ¬ ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­Г® Г§Г ГЇГЁГ±Г»ГўГ ГІГј ГЅГ«ГҐГ¬ГҐГ­ГІГ» ГЁГ±ГµГ®Г¤Г­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»
 	for (unsigned int i = 0; i < Matr[0].size(); i++) {
 		T[i].resize(Matr.size());
 	}
 
-	//транспонировано переписываем элементы из Matr в T 
+	//ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­Г® ГЇГҐГ°ГҐГЇГЁГ±Г»ГўГ ГҐГ¬ ГЅГ«ГҐГ¬ГҐГ­ГІГ» ГЁГ§ Matr Гў T 
 	for (unsigned int i = 0; i < Matr.size(); i++) {
 		for (unsigned int j = 0; j < Matr[i].size(); j++) {
 			T[j][i] = Matr[i][j];
 		}
 	}
 
-	//транспонируем размерность исходной матрицы
+	//ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°ГіГҐГ¬ Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГј ГЁГ±ГµГ®Г¤Г­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»
 	Matr.resize(T.size());
 	for (unsigned int i = 0; i < T.size(); i++) {
 		Matr[i].resize(T[i].size());
 	}
 
-	//переписываем элементы из T в Matr
+	//ГЇГҐГ°ГҐГЇГЁГ±Г»ГўГ ГҐГ¬ ГЅГ«ГҐГ¬ГҐГ­ГІГ» ГЁГ§ T Гў Matr
 	for (unsigned int i = 0; i < T.size(); i++) {
 		for (unsigned int j = 0; j < T[i].size(); j++) {
 			Matr[i][j] = T[i][j];
@@ -180,7 +180,7 @@ void Matrix::Transposition() {
 
 }
 
-//создание диагональной матрицы из исходной
+//Г±Г®Г§Г¤Г Г­ГЁГҐ Г¤ГЁГ ГЈГ®Г­Г Г«ГјГ­Г®Г© Г¬Г ГІГ°ГЁГ¶Г» ГЁГ§ ГЁГ±ГµГ®Г¤Г­Г®Г©
 void Matrix::Diagonal() {
 	for (unsigned int i = 0; i < Matr.size(); i++) {
 		for (unsigned int j = 0; j < Matr[i].size(); j++) {
@@ -190,10 +190,10 @@ void Matrix::Diagonal() {
 	}
 }
 
-//оператор сложения матриц(передаваемый тип данных - вектор из векторов типа double)
-//чтобы сложить с другим объектом этого класса нужно у прибавляемого объекта вызвать метод Get_Matr
+//Г®ГЇГҐГ°Г ГІГ®Г° Г±Г«Г®Г¦ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶(ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г»Г© ГІГЁГЇ Г¤Г Г­Г­Г»Гµ - ГўГҐГЄГІГ®Г° ГЁГ§ ГўГҐГЄГІГ®Г°Г®Гў ГІГЁГЇГ  double)
+//Г·ГІГ®ГЎГ» Г±Г«Г®Г¦ГЁГІГј Г± Г¤Г°ГіГЈГЁГ¬ Г®ГЎГєГҐГЄГІГ®Г¬ ГЅГІГ®ГЈГ® ГЄГ«Г Г±Г±Г  Г­ГіГ¦Г­Г® Гі ГЇГ°ГЁГЎГ ГўГ«ГїГҐГ¬Г®ГЈГ® Г®ГЎГєГҐГЄГІГ  ГўГ»Г§ГўГ ГІГј Г¬ГҐГІГ®Г¤ Get_Matr
 void Matrix::operator+= (const std::vector<std::vector<double>> Matr2) {
-	if (Matr2.size() != Matr.size() || Matr2[0].size() != Matr[0].size()) { //кидаем исключение, если размеры складываемых матриц разные
+	if (Matr2.size() != Matr.size() || Matr2[0].size() != Matr[0].size()) { //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г°Г Г§Г¬ГҐГ°Г» Г±ГЄГ«Г Г¤Г»ГўГ ГҐГ¬Г»Гµ Г¬Г ГІГ°ГЁГ¶ Г°Г Г§Г­Г»ГҐ
 		throw std::length_error("Incorrect size of Matrix you want to add");
 	}
 	else
@@ -206,10 +206,10 @@ void Matrix::operator+= (const std::vector<std::vector<double>> Matr2) {
 	}
 }
 
-//оператор вычитания матриц(передаваемый тип данных - вектор из векторов типа double)
-//чтобы вычесть с другим объектом этого класса нужно у вычитаемого объекта вызвать метод Get_Matr
+//Г®ГЇГҐГ°Г ГІГ®Г° ГўГ»Г·ГЁГІГ Г­ГЁГї Г¬Г ГІГ°ГЁГ¶(ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г»Г© ГІГЁГЇ Г¤Г Г­Г­Г»Гµ - ГўГҐГЄГІГ®Г° ГЁГ§ ГўГҐГЄГІГ®Г°Г®Гў ГІГЁГЇГ  double)
+//Г·ГІГ®ГЎГ» ГўГ»Г·ГҐГ±ГІГј Г± Г¤Г°ГіГЈГЁГ¬ Г®ГЎГєГҐГЄГІГ®Г¬ ГЅГІГ®ГЈГ® ГЄГ«Г Г±Г±Г  Г­ГіГ¦Г­Г® Гі ГўГ»Г·ГЁГІГ ГҐГ¬Г®ГЈГ® Г®ГЎГєГҐГЄГІГ  ГўГ»Г§ГўГ ГІГј Г¬ГҐГІГ®Г¤ Get_Matr
 void Matrix::operator-= (const std::vector<std::vector<double>> Matr2) {
-	if (Matr2.size() != Matr.size() || Matr2[0].size() != Matr[0].size()) {  //кидаем исключение, если размеры вычитаемых матриц разные
+	if (Matr2.size() != Matr.size() || Matr2[0].size() != Matr[0].size()) {  //ГЄГЁГ¤Г ГҐГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ, ГҐГ±Г«ГЁ Г°Г Г§Г¬ГҐГ°Г» ГўГ»Г·ГЁГІГ ГҐГ¬Г»Гµ Г¬Г ГІГ°ГЁГ¶ Г°Г Г§Г­Г»ГҐ
 		throw std::length_error("Incorrect size of Matrix you want to add");
 	}
 	else
@@ -222,22 +222,22 @@ void Matrix::operator-= (const std::vector<std::vector<double>> Matr2) {
 	}
 }
 
-//оператор умножения матриц(передаваемый тип данных - вектор из векторов типа double)
-//чтобы умножить на другой объект этого класса нужно у объекта на который умножают вызвать метод Get_Matr
-//помним что кол-во столбцов 1-й матрицы = кол-ву строк 2-й
+//Г®ГЇГҐГ°Г ГІГ®Г° ГіГ¬Г­Г®Г¦ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶(ГЇГҐГ°ГҐГ¤Г ГўГ ГҐГ¬Г»Г© ГІГЁГЇ Г¤Г Г­Г­Г»Гµ - ГўГҐГЄГІГ®Г° ГЁГ§ ГўГҐГЄГІГ®Г°Г®Гў ГІГЁГЇГ  double)
+//Г·ГІГ®ГЎГ» ГіГ¬Г­Г®Г¦ГЁГІГј Г­Г  Г¤Г°ГіГЈГ®Г© Г®ГЎГєГҐГЄГІ ГЅГІГ®ГЈГ® ГЄГ«Г Г±Г±Г  Г­ГіГ¦Г­Г® Гі Г®ГЎГєГҐГЄГІГ  Г­Г  ГЄГ®ГІГ®Г°Г»Г© ГіГ¬Г­Г®Г¦Г ГѕГІ ГўГ»Г§ГўГ ГІГј Г¬ГҐГІГ®Г¤ Get_Matr
+//ГЇГ®Г¬Г­ГЁГ¬ Г·ГІГ® ГЄГ®Г«-ГўГ® Г±ГІГ®Г«ГЎГ¶Г®Гў 1-Г© Г¬Г ГІГ°ГЁГ¶Г» = ГЄГ®Г«-ГўГі Г±ГІГ°Г®ГЄ 2-Г©
 void Matrix::operator*= (const std::vector<std::vector<double>> Matr2) {
 	if (Matr[0].size() != Matr2.size()) {
 		throw std::length_error("Incorrect size of Matrix you want to multiply by. Correct: col of Matrix1 = row of Matrix2");
 	}
 	else
 	{
-		std::vector<std::vector<double>> Matr_count;//создаем доп.матрицу для временного занесения туда вычисляемых значений
+		std::vector<std::vector<double>> Matr_count;//Г±Г®Г§Г¤Г ГҐГ¬ Г¤Г®ГЇ.Г¬Г ГІГ°ГЁГ¶Гі Г¤Г«Гї ГўГ°ГҐГ¬ГҐГ­Г­Г®ГЈГ® Г§Г Г­ГҐГ±ГҐГ­ГЁГї ГІГіГ¤Г  ГўГ»Г·ГЁГ±Г«ГїГҐГ¬Г»Гµ Г§Г­Г Г·ГҐГ­ГЁГ©
 		Matr_count.resize(Matr2.size());
 		for (unsigned int i = 0; i < Matr2.size(); i++)
 		{
 			Matr_count[i].resize(Matr2[i].size());
 		}
-		double count = 0.0; int a = 0; //переменные для счета
+		double count = 0.0; int a = 0; //ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»ГҐ Г¤Г«Гї Г±Г·ГҐГІГ 
 		for (unsigned int i = 0; i < Matr2.size(); i++) {
 			for (unsigned int j = 0; j < Matr2[i].size(); j++) {
 				a = 0; count = 0.0;
@@ -250,7 +250,7 @@ void Matrix::operator*= (const std::vector<std::vector<double>> Matr2) {
 			}
 		}
 
-		//меняем размерность исходной матрицы размерность той матрицы, на которую умножаем при необходимости
+		//Г¬ГҐГ­ГїГҐГ¬ Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГј ГЁГ±ГµГ®Г¤Г­Г®Г© Г¬Г ГІГ°ГЁГ¶Г» Г°Г Г§Г¬ГҐГ°Г­Г®Г±ГІГј ГІГ®Г© Г¬Г ГІГ°ГЁГ¶Г», Г­Г  ГЄГ®ГІГ®Г°ГіГѕ ГіГ¬Г­Г®Г¦Г ГҐГ¬ ГЇГ°ГЁ Г­ГҐГ®ГЎГµГ®Г¤ГЁГ¬Г®Г±ГІГЁ
 		if (Matr2[0].size() != Matr[0].size()) {
 			Matr.resize(Matr2.size());
 			for (unsigned int i = 0; i < Matr2.size(); i++) {
@@ -258,7 +258,7 @@ void Matrix::operator*= (const std::vector<std::vector<double>> Matr2) {
 			}
 		}
 
-		//возвращаем значения в исходную матрицу
+		//ГўГ®Г§ГўГ°Г Г№Г ГҐГ¬ Г§Г­Г Г·ГҐГ­ГЁГї Гў ГЁГ±ГµГ®Г¤Г­ГіГѕ Г¬Г ГІГ°ГЁГ¶Гі
 		for (unsigned int i = 0; i < Matr_count.size(); i++) {
 			for (unsigned int j = 0; j < Matr_count[i].size(); j++) {
 				Matr[i][j] = Matr_count[i][j];
@@ -267,7 +267,7 @@ void Matrix::operator*= (const std::vector<std::vector<double>> Matr2) {
 	}
 }
 
-//вычисление обратной матрицы к исходной методом корней(только для квадратных матриц!!!)
+//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г®ГЎГ°Г ГІГ­Г®Г© Г¬Г ГІГ°ГЁГ¶Г» ГЄ ГЁГ±ГµГ®Г¤Г­Г®Г© Г¬ГҐГІГ®Г¤Г®Г¬ ГЄГ®Г°Г­ГҐГ©(ГІГ®Г«ГјГЄГ® Г¤Г«Гї ГЄГўГ Г¤Г°Г ГІГ­Г»Гµ Г¬Г ГІГ°ГЁГ¶!!!)
 void Matrix::Reverse_Matrix() {
 	double pairsum, sqsum;
 	unsigned int const n = Matr.size();
@@ -309,7 +309,7 @@ void Matrix::Reverse_Matrix() {
 	}
 
 
-	//вычисление элементов матриц L и U
+	//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў Г¬Г ГІГ°ГЁГ¶ L ГЁ U
 	for (int i = 0; i < n; i++) {
 		l[i][0] = Matr[i][0];
 	}
@@ -337,7 +337,7 @@ void Matrix::Reverse_Matrix() {
 	}
 
 
-	//вычислениеи матицы Y
+	//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐГЁ Г¬Г ГІГЁГ¶Г» Y
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			if (j > i) {
@@ -357,7 +357,7 @@ void Matrix::Reverse_Matrix() {
 	}
 
 
-	//вычисление матрицы x
+	//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г¬Г ГІГ°ГЁГ¶Г» x
 	for (int i = n - 1; i >= 0; i--) {
 		for (int j = n - 1; j >= 0; j--) {
 			if (j < i) {
@@ -376,7 +376,7 @@ void Matrix::Reverse_Matrix() {
 	}
 
 
-	//вычисление и вывод матрицы обратной к A
+	//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ ГЁ ГўГ»ГўГ®Г¤ Г¬Г ГІГ°ГЁГ¶Г» Г®ГЎГ°Г ГІГ­Г®Г© ГЄ A
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
 			Matr[i][j] = 0.0;
@@ -389,7 +389,7 @@ void Matrix::Reverse_Matrix() {
 
 }
 
-//вычисление определителя квадратной матрицы(только 1-3 порядка!!!)
+//ГўГ»Г·ГЁГ±Г«ГҐГ­ГЁГҐ Г®ГЇГ°ГҐГ¤ГҐГ«ГЁГІГҐГ«Гї ГЄГўГ Г¤Г°Г ГІГ­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»(ГІГ®Г«ГјГЄГ® 1-3 ГЇГ®Г°ГїГ¤ГЄГ !!!)
 double Matrix::Determinant() {
 	if (Matr.size() == 1) {
 		return Matr[0][0];
@@ -410,59 +410,59 @@ double Matrix::Determinant() {
 	}
 }
 
-//проверка методов матрицы
+//ГЇГ°Г®ГўГҐГ°ГЄГ  Г¬ГҐГІГ®Г¤Г®Гў Г¬Г ГІГ°ГЁГ¶Г»
 void Test() {
 
-	//пример работы с классом №1(try-catch)
+	//ГЇГ°ГЁГ¬ГҐГ° Г°Г ГЎГ®ГІГ» Г± ГЄГ«Г Г±Г±Г®Г¬ В№1(try-catch)
 	try {
-		Matrix M(1, 3); //может сгенерировать исключение при неправильном размере матрицы
+		Matrix M(1, 3); //Г¬Г®Г¦ГҐГІ Г±ГЈГҐГ­ГҐГ°ГЁГ°Г®ГўГ ГІГј ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ ГЇГ°ГЁ Г­ГҐГЇГ°Г ГўГЁГ«ГјГ­Г®Г¬ Г°Г Г§Г¬ГҐГ°ГҐ Г¬Г ГІГ°ГЁГ¶Г»
 	}
 	catch (const std::invalid_argument a) {
-		cout << a.what() << endl; //ловим и выводим исключение
+		cout << a.what() << endl; //Г«Г®ГўГЁГ¬ ГЁ ГўГ»ГўГ®Г¤ГЁГ¬ ГЁГ±ГЄГ«ГѕГ·ГҐГ­ГЁГҐ
 	}
 
 
-	//блок assert
+	//ГЎГ«Г®ГЄ assert
 	Matrix M(2, 2);
 	M.Fill_With(2);
-	M.Output_Matrix(); //проверка правильности вывода матрицы(корректна матрица 2x2 заполненная двойками)
-	assert(M.Get_Element(0, 0) == 2 && M.Get_Element(1, 0) == 2); //проверка правильности заполнения матрицы одним значением
+	M.Output_Matrix(); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ ГўГ»ГўГ®Г¤Г  Г¬Г ГІГ°ГЁГ¶Г»(ГЄГ®Г°Г°ГҐГЄГІГ­Г  Г¬Г ГІГ°ГЁГ¶Г  2x2 Г§Г ГЇГ®Г«Г­ГҐГ­Г­Г Гї Г¤ГўГ®Г©ГЄГ Г¬ГЁ)
+	assert(M.Get_Element(0, 0) == 2 && M.Get_Element(1, 0) == 2); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ Г§Г ГЇГ®Г«Г­ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶Г» Г®Г¤Г­ГЁГ¬ Г§Г­Г Г·ГҐГ­ГЁГҐГ¬
 
 	M.Set_Element(0, 1, 3);
-	assert(M.Get_Element(0, 1) == 3); //проверка правильности доступа к элементам матрицы
+	assert(M.Get_Element(0, 1) == 3); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ Г¤Г®Г±ГІГіГЇГ  ГЄ ГЅГ«ГҐГ¬ГҐГ­ГІГ Г¬ Г¬Г ГІГ°ГЁГ¶Г»
 
 	std::vector<double> V{1, 1};
 	M.Set_Str_By_Vector(0, V);
-	assert(M.Get_Element(0, 0) == 1 && M.Get_Element(1, 0) == 2); //проверка правильности доступа к строкам матрицы
+	assert(M.Get_Element(0, 0) == 1 && M.Get_Element(1, 0) == 2); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ Г¤Г®Г±ГІГіГЇГ  ГЄ Г±ГІГ°Г®ГЄГ Г¬ Г¬Г ГІГ°ГЁГ¶Г»
 
-	M.Fill_Random(10, 20); //случайные значения от 10 до 20
+	M.Fill_Random(10, 20); //Г±Г«ГіГ·Г Г©Г­Г»ГҐ Г§Г­Г Г·ГҐГ­ГЁГї Г®ГІ 10 Г¤Г® 20
 	for (unsigned int i = 0; i < 2; i++) {
 		for (unsigned int j = 0; j < 2; j++) {
-			assert(M.Get_Element(0, 0) >= 10 && M.Get_Element(0, 0) <= 20); //проверка правильности работы рандомайзера
+			assert(M.Get_Element(0, 0) >= 10 && M.Get_Element(0, 0) <= 20); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ Г°Г ГЎГ®ГІГ» Г°Г Г­Г¤Г®Г¬Г Г©Г§ГҐГ°Г 
 		}
 	}
 
 	M.Fill_With(1);
 	M.Matr_X_Number(3);
-	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 3); //проверка правильности умножения матрицы на число
+	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 3); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГЇГ°Г ГўГЁГ«ГјГ­Г®Г±ГІГЁ ГіГ¬Г­Г®Г¦ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶Г» Г­Г  Г·ГЁГ±Г«Г®
 
 	M.Diagonal();
-	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 0);//проверка диагональной матрицы
+	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 0);//ГЇГ°Г®ГўГҐГ°ГЄГ  Г¤ГЁГ ГЈГ®Г­Г Г«ГјГ­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»
 
 	M.Transposition();
-	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 0);//проверка транспонированной матрицы
+	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 0) == 0);//ГЇГ°Г®ГўГҐГ°ГЄГ  ГІГ°Г Г­Г±ГЇГ®Г­ГЁГ°Г®ГўГ Г­Г­Г®Г© Г¬Г ГІГ°ГЁГ¶Г»
 
 	Matrix N(2, 2);
 	N.Fill_With(2);
 	M.Fill_With(3);
 	M += N.Get_Matr();
-	assert(M.Get_Element(0, 0) == 5 && M.Get_Element(1, 1) == 5); //проверка сложения матриц
+	assert(M.Get_Element(0, 0) == 5 && M.Get_Element(1, 1) == 5); //ГЇГ°Г®ГўГҐГ°ГЄГ  Г±Г«Г®Г¦ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶
 	M -= N.Get_Matr();
-	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 1) == 3); //проверка вычитания матриц
+	assert(M.Get_Element(0, 0) == 3 && M.Get_Element(1, 1) == 3); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГўГ»Г·ГЁГІГ Г­ГЁГї Г¬Г ГІГ°ГЁГ¶
 	M *= N.Get_Matr();
-	assert(M.Get_Element(0, 0) == 12 && M.Get_Element(1, 1) == 12); //проверка умножения матриц
+	assert(M.Get_Element(0, 0) == 12 && M.Get_Element(1, 1) == 12); //ГЇГ°Г®ГўГҐГ°ГЄГ  ГіГ¬Г­Г®Г¦ГҐГ­ГЁГї Г¬Г ГІГ°ГЁГ¶
 
-	assert(M.Determinant() == 0); //проверка определителя матрицы
+	assert(M.Determinant() == 0); //ГЇГ°Г®ГўГҐГ°ГЄГ  Г®ГЇГ°ГҐГ¤ГҐГ«ГЁГІГҐГ«Гї Г¬Г ГІГ°ГЁГ¶Г»
 
 	M.Fill_With(2); M.Set_Element(0, 0, 1);
 	M.Reverse_Matrix();
